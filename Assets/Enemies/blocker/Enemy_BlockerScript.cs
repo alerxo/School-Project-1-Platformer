@@ -14,4 +14,9 @@ public class Enemy_BlockerScript : MonoBehaviour
             collision.transform.parent.SendMessage("DmgTaken", damage);
         }
     }
+
+    public void Dead()
+    {
+        Destroy(gameObject);
+    }
 }

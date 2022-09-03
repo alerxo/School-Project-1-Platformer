@@ -6,8 +6,9 @@ public class ElevatorPlatformScript : MonoBehaviour
 {
     private Transform elevator;
 
-    private Transform endObj;
-    private Transform startObj;
+    [SerializeField]
+    private List<Transform> targetList;
+    private int currentTarget = 0;
 
     private Transform target;
 
@@ -17,15 +18,14 @@ public class ElevatorPlatformScript : MonoBehaviour
     private void Start()
     {
         elevator = transform.GetChild(0);
-        startObj = transform.GetChild(1);
-        endObj = transform.GetChild(2);
 
-        target = endObj;
+        target = targetList[currentTarget];
+
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        Movement();
+        if (targetList.Count > 0) Movement();
     }
 
     private void Movement()
@@ -39,7 +39,10 @@ public class ElevatorPlatformScript : MonoBehaviour
 
     private void ChangeTarget()
     {
-        if (target == startObj) target = endObj;
-        else if (target == endObj) target = startObj;
+        currentTarget++;
+
+        if (currentTarget == targetList.Count) currentTarget = 0;
+
+        target = targetList[currentTarget];
     }
 }
