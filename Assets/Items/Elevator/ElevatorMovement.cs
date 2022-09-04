@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ElevatorPlatformScript : MonoBehaviour
+public class ElevatorMovement : MonoBehaviour
 {
     private Transform elevator;
 

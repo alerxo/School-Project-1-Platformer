@@ -7,11 +7,11 @@ public class Enemy_BlockerScript : MonoBehaviour
     [SerializeField]
     private float damage;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.tag == "Player")
+        if (collision.transform.CompareTag("Player"))
         {
-            collision.transform.parent.SendMessage("DmgTaken", damage);
+            collision.transform.SendMessage("DmgTaken", damage);
         }
     }
 

@@ -9,8 +9,7 @@ public class PlayerStats : MonoBehaviour
     [SerializeField]
     private float maxHealth;
 
-    [SerializeField]
-    private float coins;
+    public float coins;
 
     private Vector2 respawnPos;
 
