@@ -14,22 +14,28 @@ public class PowerUpScript : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            StartCoroutine(PowerUp(collision.GetComponent<PlayerMovement>()));
+            StartCoroutine(PowerUp(collision.gameObject));
         }   
     }
 
-    private IEnumerator PowerUp(PlayerMovement playerMovement)
+    private IEnumerator PowerUp(GameObject player)
     {
-        float orgSpeed = playerMovement.moveSpeed;
+        float orgSpeed = player.GetComponent<PlayerMovement>().jumpSpeed;
+        float orgGrav = player.GetComponent<Rigidbody2D>().gravityScale;
 
-        playerMovement.moveSpeed *= powerUpAmount;
+        player.GetComponent<PlayerMovement>().jumpSpeed /= (powerUpAmount /= 2);
+
+        player.GetComponent<Rigidbody2D>().gravityScale /= (powerUpAmount *= 2);
+
+
 
         GetComponentInChildren<SpriteRenderer>().enabled = false;
         GetComponent<CircleCollider2D>().enabled = false;
 
         yield return new WaitForSeconds(duration);
 
-        playerMovement.moveSpeed = orgSpeed;
+        player.GetComponent<PlayerMovement>().jumpSpeed = orgSpeed;
+        player.GetComponent<Rigidbody2D>().gravityScale = orgGrav;
 
         Destroy(gameObject);
     }

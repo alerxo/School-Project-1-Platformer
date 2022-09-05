@@ -8,9 +8,10 @@ public class PlayerMovement : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Animator animator;
 
-    public float moveSpeed;
     [SerializeField]
-    private float jumpSpeed;
+    private float moveSpeed;
+
+    public float jumpSpeed;
 
     [SerializeField]
     private LayerMask groundMask;
@@ -22,6 +23,9 @@ public class PlayerMovement : MonoBehaviour
         rg2d = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         animator = GetComponentInChildren<Animator>();
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     void Update()

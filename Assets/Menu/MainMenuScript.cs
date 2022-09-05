@@ -14,6 +14,9 @@ public class MainMenuScript : MonoBehaviour
     public void Start()
     {
         levelCompletedText.text = "Levels Completed: " + PlayerPrefs.GetInt("CompletedLevels").ToString();
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     public void StartButton()

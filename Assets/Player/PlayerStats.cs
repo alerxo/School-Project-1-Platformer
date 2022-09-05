@@ -34,10 +34,19 @@ public class PlayerStats : MonoBehaviour
 
         playerUI.SetHealth(maxHealth, health);
 
+        GetComponentInChildren<SpriteRenderer>().color = Color.red;
+
+        Invoke(nameof(ResetColor), 0.15f);
+
         if (health <= 0)
         {
             Dead();
         }
+    }
+
+    private void ResetColor()
+    {
+        GetComponentInChildren<SpriteRenderer>().color = Color.white;
     }
 
     public void Dead()
