@@ -13,10 +13,10 @@ public class NextLevelDoor : MonoBehaviour
     private Sprite openDoor2;
 
     [SerializeField]
-    private int nextScene;
+    private int sceneNumber;
 
     [SerializeField]
-    private bool lastScene = false;
+    private int nextScene;
 
     private void Open()
     {
@@ -30,10 +30,8 @@ public class NextLevelDoor : MonoBehaviour
     {
         if (collision.CompareTag("Player") && open)
         {
-            GameObserver.LevelsCompletedToMemory(nextScene - 1);
-
-            if (lastScene) SceneManager.LoadScene("MainMenu");
-            else SceneManager.LoadScene(nextScene);
+            GameObserver.LevelsCompletedToMemory(sceneNumber);
+            SceneManager.LoadScene(nextScene);
         }
     }
 }

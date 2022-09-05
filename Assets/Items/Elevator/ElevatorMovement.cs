@@ -15,6 +15,8 @@ public class ElevatorMovement : MonoBehaviour
     [SerializeField]
     private float speed = 1;
 
+    private bool isMove = false;
+
     private void Start()
     {
         elevator = transform.GetChild(0);
@@ -25,7 +27,12 @@ public class ElevatorMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (targetList.Count > 0) Movement();
+        if (targetList.Count > 0 && isMove) Movement();
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.transform.CompareTag("Player")) isMove = true;
     }
 
     private void Movement()
