@@ -19,11 +19,18 @@ public class PlayerStats : MonoBehaviour
 
     private CinemachineVirtualCamera vCam;
 
+    private AudioSource audioSource;
+
+    [SerializeField]
+    private AudioClip hurtClip;
+
     private void Start()
     {
         playerUI = GetComponent<PlayerUI>();
         animator = GetComponentInChildren<Animator>();
         vCam = GetComponentInChildren<CinemachineVirtualCamera>();
+        audioSource = GetComponent<AudioSource>();
+        
 
 
         respawnPos = transform.position;
@@ -43,6 +50,9 @@ public class PlayerStats : MonoBehaviour
 
         vCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = 7;
         vCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = 7;
+
+        audioSource.clip = hurtClip;
+        audioSource.Play();
 
         Invoke(nameof(ResetColorAndNoise), 0.15f);
 

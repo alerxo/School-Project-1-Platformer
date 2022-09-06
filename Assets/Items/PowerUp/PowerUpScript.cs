@@ -10,6 +10,17 @@ public class PowerUpScript : MonoBehaviour
     [SerializeField]
     private float powerUpAmount = 2;
 
+    private AudioSource audioSource;
+
+    [SerializeField]
+    private AudioClip powerUpClip;
+
+    private void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+        audioSource.clip = powerUpClip;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
@@ -20,6 +31,8 @@ public class PowerUpScript : MonoBehaviour
 
     private IEnumerator PowerUp(GameObject player)
     {
+        audioSource.Play();
+
         float orgSpeed = player.GetComponent<PlayerMovement>().jumpSpeed;
         float orgGrav = player.GetComponent<Rigidbody2D>().gravityScale;
 

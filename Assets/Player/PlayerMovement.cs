@@ -18,11 +18,19 @@ public class PlayerMovement : MonoBehaviour
 
     private bool canJump = true;
 
+    private AudioSource audioSource;
+
+    [SerializeField]
+    private AudioClip jumpClip;
+
     void Start()
     {
         rg2d = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         animator = GetComponentInChildren<Animator>();
+
+        audioSource = GetComponent<AudioSource>();
+        
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -54,15 +62,19 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump()
     {
-        if (Input.GetKey(KeyCode.Space) && isGrounded())
+        if (Input.GetKey(KeyCode.Space) && IsGrounded())
         {
+            audioSource.clip = jumpClip;
+
+            audioSource.Play();
+
             canJump = false;
             animator.SetBool("Jump", true);
             rg2d.AddForce(new Vector2(0, jumpSpeed * 100));
             StartCoroutine(JumpCoolDown());
         }
 
-        else if (isGrounded()) animator.SetBool("Jump", false);
+        else if (IsGrounded()) animator.SetBool("Jump", false);
     }
 
     private void Crouch()
@@ -70,7 +82,7 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-    private bool isGrounded()
+    private bool IsGrounded()
     {
         if (Physics2D.BoxCast(transform.position, new Vector2(0.9f, 0.1f), 0, -transform.up, 0.7f, groundMask) && canJump) return true;
         else return false;
@@ -78,7 +90,7 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator JumpCoolDown()
     {
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.5f);
         canJump = true;
     }
 }
