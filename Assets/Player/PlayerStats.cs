@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class PlayerStats : MonoBehaviour
 { 
@@ -16,10 +17,14 @@ public class PlayerStats : MonoBehaviour
     private PlayerUI playerUI;
     private Animator animator;
 
+    private CinemachineVirtualCamera vCam;
+
     private void Start()
     {
         playerUI = GetComponent<PlayerUI>();
         animator = GetComponentInChildren<Animator>();
+        vCam = GetComponentInChildren<CinemachineVirtualCamera>();
+
 
         respawnPos = transform.position;
 
@@ -36,7 +41,10 @@ public class PlayerStats : MonoBehaviour
 
         GetComponentInChildren<SpriteRenderer>().color = Color.red;
 
-        Invoke(nameof(ResetColor), 0.15f);
+        vCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = 7;
+        vCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = 7;
+
+        Invoke(nameof(ResetColorAndNoise), 0.15f);
 
         if (health <= 0)
         {
@@ -44,9 +52,11 @@ public class PlayerStats : MonoBehaviour
         }
     }
 
-    private void ResetColor()
+    private void ResetColorAndNoise()
     {
         GetComponentInChildren<SpriteRenderer>().color = Color.white;
+        vCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = 0;
+        vCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = 0;
     }
 
     public void Dead()
